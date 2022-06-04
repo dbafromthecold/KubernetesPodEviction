@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sqlserver-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sqlserver
+  template:
+    metadata:
+      labels:
+        app: sqlserver
+    spec:
+      volumes:
+        - name: sqlsystem
+          persistentVolumeClaim:
+            claimName: sqlsystem-pvc
+        - name: sqldata
+          persistentVolumeClaim:
+            claimName: sqldata-pvc
+        - name: sqllog
+          persistentVolumeClaim:
+            claimName: sqllog-pvc
+      containers:
+        - name: sqlserver
+          image: mcr.microsoft.com/mssql/server:2022-CTP2.0-ubuntu-20.04
+          ports:
+            - containerPort: 1433
+          volumeMounts:
+            - name: sqlsystem
+              mountPath: /var/opt/mssql
+            - name: sqldata
+              mountPath: /var/opt/sqlserver/data
+            - name: sqllog
+              mountPath: /var/opt/sqlserver/log
+          env:
+            - name: MSSQL_PID
+              value: "Developer"
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: MSSQL_AGENT_ENABLED
+              value: "TRUE"
+            - name: MSSQL_DATA_DIR
+              value: /var/opt/sqlserver/data
+            - name: MSSQL_LOG_DIR
+              value: /var/opt/sqlserver/log
+            - name: MSSQL_SA_PASSWORD
+              value: "Testing1122"
+          resources:
+            requests:
+              memory: "1024Mi"
+              cpu: "1000m"
+            limits:
+              memory: "2048Mi"
+              cpu: "2000m"
+      securityContext:
+        fsGroup: 10001
+      tolerations:
+      - key: "node.kubernetes.io/unreachable"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 10
+      - key: "node.kubernetes.io/not-ready"
+        operator: "Exists"
+        effect: "NoExecute"
+        tolerationSeconds: 10
+  strategy:
+    type: Recreate
