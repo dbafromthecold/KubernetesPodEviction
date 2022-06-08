@@ -15,9 +15,11 @@
 
 ## Pod Eviction on Node failure
 <!-- .slide: style="text-align: left;"> -->
-- What happens when a node fails?<br>
-- Pods are moved to node in the Ready state<br>
-- However, by default this takes 5 minutes<br>
+<ul>
+<li class="fragment">What happens when a node fails?<br></li>
+<li class="fragment">Pods are moved to node in the Ready state</li>
+<li class="fragment">However, by default this takes 5 minutes</li>
+<ul>
 
 <font size="6"><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration</a></font>
 
@@ -29,7 +31,7 @@
 
 ## Adding tolerations to deployments
 <!-- .slide: style="text-align: left;"> -->
-<pre><code data-line-numbers="1-4|4|5-8|8">tolerations:
+<pre><code data-line-numbers="1-5|5|6-9|9">tolerations:
 - key: "node.kubernetes.io/unreachable"
   operator: "Exists"
   effect: "NoExecute"
@@ -48,9 +50,12 @@
 
 ## What about stateful applications?
 <!-- .slide: style="text-align: left;"> -->
-- Pods need to move to a new node<br>
-- Storage also has to move<br>
-- Otherwise the pod will not spin up<br>
+<ul>
+<li class="fragment">Pods need to move to a new node<br></li>
+<li class="fragment">Storage also has to move</li>
+<li class="fragment">Otherwise the pod will not spin up</li>
+<ul>
+
 
 ---
 
@@ -62,7 +67,7 @@
 
 <!-- .slide: style="text-align: left;"> -->
 <font size="6">
-<a href="https://github.com/dbafromthecold/KubernetesPodEviction">github.com/dbafromthecold/KubernetesPodEviction</a><br>
-<a href="https://dbafromthecold.com/2020/04/08/adjusting-pod-eviction-time-in-kubernetes/">dbafromthecold.com/2020/04/08/adjusting-pod-eviction-time-in-kubernetes/</a><br>
-<a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/</a>
+<a href="https://github.com/dbafromthecold/KubernetesPodEviction">Github Repo - Kubernetes Pod Eviction</a><br>
+<a href="https://dbafromthecold.com/2020/04/08/adjusting-pod-eviction-time-in-kubernetes/">Blog Post - Adjusting pod eviction time</a><br>
+<a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">Kubernets Documentation - taint-and-tolerations</a>
 </font>
