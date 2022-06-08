@@ -26,6 +26,7 @@
 <li class="fragment">Running SQL Server in containers for dev/test/qa<br></li>
 <li class="fragment">Can I run SQL Server in a container in production?</li>
 <li class="fragment">Started to investigate running in Kubernetes</li>
+<li class="fragment">Testing mainly in Azure Kubernetes Service</li>
 <ul>
 
 ---
