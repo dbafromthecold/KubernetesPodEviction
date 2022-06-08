@@ -19,6 +19,31 @@
 
 ---
 
+## Background
+<img src="images/KubernetesLogo.png" style="float: right"/>
+<!-- .slide: style="text-align: left;"> -->
+<ul>
+<li class="fragment">SQL Server DBA for over 10 years<br></li>
+<li class="fragment">Running SQL Server in containers for dev/test/qa<br></li>
+<li class="fragment">Can I run SQL Server in a container in production?</li>
+<li class="fragment">Started to investigate running in Kubernetes</li>
+<ul>
+
+---
+
+## Using SQL Server in Containers
+
+<p align="center">
+<img src="images/ding_containers.png" />
+</p>
+
+<!-- .slide: style="text-align: left;"> -->
+<font size="6">
+<a href="https://www.sqlservercentral.com/articles/ding-the-world%E2%80%99s-largest-mobile-top-up-network-streamlines-qa-with-sql-server-containers">Source</a><br>
+</font>
+
+---
+
 ## Pod Eviction on Node failure
 <img src="images/node-128.png" style="float: right"/>
 <!-- .slide: style="text-align: left;"> -->
@@ -28,7 +53,6 @@
 <li class="fragment">Pods are moved to node in the "Ready" state</li>
 <li class="fragment">However, by default this takes 5 minutes</li>
 <ul>
-
 
 ---
 
@@ -47,6 +71,8 @@ apiServer:
     default-not-ready-toleration-seconds: "10"
     default-unreachable-toleration-seconds: "10"
 </pre></code>
+
+<br>
 
 <pre><code>sudo kubeadm init phase control-plane apiserver \
 --config=kubeadm-apiserver-update.yaml
