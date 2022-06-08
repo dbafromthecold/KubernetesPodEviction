@@ -21,6 +21,16 @@ kubectl get all
 
 
 
+# grab service external IP
+IpAddress=$(kubectl get service test -o custom-columns=":status.loadBalancer.ingress[*].ip") && echo $IpAddress
+
+
+
+# confirm connecting to nginx
+curl $IpAddress --connect-timeout 5
+
+
+
 # edit deployment adding in tolerations
 kubectl edit deployment test
 
@@ -61,6 +71,11 @@ kubectl get nodes --watch
 
 # watch pods
 kubectl get pods -o wide --watch
+
+
+
+# confirm connecting to nginx
+curl $IpAddress --connect-timeout 5
 
 
 
