@@ -36,7 +36,7 @@
 
 ---
 
-# Setting eviction timeout on the api-server
+## Setting eviction timeout on the api-server
 
 <pre><code data-line-numbers="7-8">apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
