@@ -1,4 +1,10 @@
-# Kubernetes Pod Eviction
+## Adjusting Pod Eviction Timings in Kubernetes
+
+---
+
+<p align="center">
+<img src="images/cndm_title_slide.png" />
+</p>
 
 ---
 
@@ -14,6 +20,7 @@
 ---
 
 ## Pod Eviction on Node failure
+<img src="images/node-128.png" style="float: right"/>
 <!-- .slide: style="text-align: left;"> -->
 <ul>
 <li class="fragment">What happens when a node fails?<br></li>
@@ -21,7 +28,6 @@
 <li class="fragment">However, by default this takes 5 minutes</li>
 <ul>
 
-<font size="6"><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration</a></font>
 
 ---
 
@@ -68,7 +74,7 @@
 <font size="6">
 <a href="https://github.com/dbafromthecold/KubernetesPodEviction">Github Repo - Kubernetes Pod Eviction</a><br>
 <a href="https://dbafromthecold.com/2020/04/08/adjusting-pod-eviction-time-in-kubernetes/">Blog Post - Adjusting pod eviction time</a><br>
-<a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">Kubernets Documentation - taint-and-tolerations</a>
+<a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">Kubernetes Documentation - Taints and tolerations</a>
 </font>
 
 <p align="center">
