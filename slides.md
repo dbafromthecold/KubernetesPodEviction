@@ -38,7 +38,7 @@
 
 ## Setting eviction timeout on the api-server
 
-<pre><code data-line-numbers="7-8">apiVersion: kubeadm.k8s.io/v1beta2
+<pre><code data-line-numbers="1-8|7-8">apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.18.0
 apiServer:
@@ -49,7 +49,7 @@ apiServer:
 </pre></code>
 
 <br>
-
+Apply to the cluster: -
 <pre><code>sudo kubeadm init phase control-plane \
 apiserver --config=kubeadm-apiserver-update.yaml
 </pre></code>
