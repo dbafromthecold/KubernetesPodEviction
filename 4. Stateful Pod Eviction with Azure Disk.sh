@@ -15,6 +15,10 @@
 cd /mnt/c/git/dbafromthecold/KubernetesPodEviction && pwd
 
 
+# view storage classes
+kubectl get storageclass
+
+
 
 # create storage for sql server deployment
 kubectl apply -f ./yaml/azure-disk/sqlserver-azuredisk-pvc.yaml
@@ -23,6 +27,11 @@ kubectl apply -f ./yaml/azure-disk/sqlserver-azuredisk-pvc.yaml
 
 # create deployment
 kubectl apply -f ./yaml/azure-disk/sqlserver-azuredisk-deployment.yaml
+
+
+
+# expose deployment
+kubectl expose deployment sqlserver-deployment --port 1433 --target-port 1433 --type LoadBalancer
 
 
 
@@ -37,8 +46,22 @@ kubectl get all
 
 
 
-# get node pod is running on
+# view node pod is running on
 kubectl get pods -o wide
+
+
+# grab service external IP address
+IpAddress=$(kubectl get service sqlserver-deployment --no-headers -o custom-columns=":status.loadBalancer.ingress[*].ip") && echo $IpAddress
+
+
+
+# create a database
+mssql-cli -S $IpAddress -U sa -P Testing1122 -Q "CREATE DATABASE [testdatabase]"
+
+
+
+# confirm database
+mssql-cli -S $IpAddress -U sa -P Testing1122 -Q "SELECT [name] FROM [sys].[databases];"
 
 
 
@@ -58,8 +81,23 @@ az vmss deallocate --name $VMSSNAME --instance-ids $INSTANCEID --resource-group 
 
 
 
+# watch nodes
+kubectl get nodes --watch
+
+
+
 # watch pods
 kubectl get pods -o wide --watch
+
+
+
+# get new pod
+PODNAME=$(kubectl get pods --field-selector=status.phase=Pending -o jsonpath="{.items[0].metadata.name}") && echo $PODNAME
+
+
+
+# describe pod
+kubectl describe pod $PODNAME
 
 
 
@@ -68,6 +106,21 @@ az vmss start --name $VMSSNAME --instance-ids $INSTANCEID --resource-group $RESO
 
 
 
+# watch nodes
+kubectl get nodes --watch
+
+
+
+# watch pods
+kubectl get pods --watch
+
+
+
+# confirm database
+mssql-cli -S $IpAddress -U sa -P Testing1122 -Q "SELECT [name] FROM [sys].[databases];"
+
+
+
 # delete deployment
-kubectl delete deployment sqlserver
+kubectl delete deployment sqlserver-deployment
 kubectl delete pvc sqldata-pvc sqllog-pvc sqlsystem-pvc

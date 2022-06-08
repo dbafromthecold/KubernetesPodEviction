@@ -59,8 +59,8 @@ kubectl get nodes --watch
 
 
 
-# view pods
-kubectl get pods -o wide
+# watch pods
+kubectl get pods -o wide --watch
 
 
 
@@ -69,8 +69,8 @@ az vmss start --name $VMSSNAME --instance-ids $INSTANCEID --resource-group $RESO
 
 
 
-# view nodes
-kubectl get nodes
+# watch nodes
+kubectl get nodes --watch
 
 
 
@@ -81,3 +81,4 @@ kubectl get pods -o wide
 
 # delete deployment
 kubectl delete deployment test
+kubectl delete service test

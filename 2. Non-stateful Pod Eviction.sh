@@ -22,7 +22,6 @@ RESOURCEGROUP="MC_kubernetes_kubernetes1_eastus"
 
 
 # list vmss
-# https://docs.microsoft.com/en-us/cli/azure/vmss?view=azure-cli-latest#az-vmss-list
 az vmss list --resource-group $RESOURCEGROUP -o table
 
 

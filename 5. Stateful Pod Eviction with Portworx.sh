@@ -48,6 +48,35 @@ kubectl apply -f ./yaml/portworx/sqlserver-portworx-deployment.yaml
 
 
 
+# expose deployment
+kubectl expose deployment sqlserver-deployment --port 1433 --target-port 1433 --type LoadBalancer
+
+
+
+# confirm deployment
+kubectl get all
+
+
+
+# confirm pod
+kubectl get pods -o wide
+
+
+
+# grab service external IP address
+IpAddress=$(kubectl get service sqlserver-deployment --no-headers -o custom-columns=":status.loadBalancer.ingress[*].ip") && echo $IpAddress
+
+
+
+# create a database
+mssql-cli -S $IpAddress -U sa -P Testing1122 -Q "CREATE DATABASE [testdatabase]"
+
+
+
+# confirm database
+mssql-cli -S $IpAddress -U sa -P Testing1122 -Q "SELECT [name] FROM [sys].[databases];"
+
+
 # switch to new terminal
 # get node pod is running on
 NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}" | sed 's/.$/\U&/')  && echo $NODE
@@ -65,15 +94,51 @@ az vmss deallocate --name $VMSSNAME --instance-ids $INSTANCEID --resource-group 
 
 
 
-# view nodes
-kubectl get nodes
+# watch nodes
+kubectl get nodes --watch
 
 
 
-#view pods
+# view pods
+kubectl get pods -o wide --watch
+
+
+
+# confirm pod
 kubectl get pods -o wide
 
 
 
-# restart node in AKS
+# get new pod
+PODNAME=$(kubectl get pods -o jsonpath='{.items[0].metadata.name}') && echo $PODNAME
+
+
+
+# describe pod
+kubectl describe pod $PODNAME
+
+
+
+# restart node in AKS in other terminal
 az vmss start --name $VMSSNAME --instance-ids $INSTANCEID --resource-group $RESOURCEGROUP
+
+
+
+# watch nodes
+kubectl get nodes --watch
+
+
+
+# confirm pods
+kubectl get pods -o wide
+
+
+
+# confirm database
+mssql-cli -S $IpAddress -U sa -P Testing1122 -Q "SELECT [name] FROM [sys].[databases];"
+
+
+
+# clean up
+kubectl delete deployment sqlserver-deployment
+kubectl delete pvc sqldata-pvc sqllog-pvc sqlsystem-pvc
