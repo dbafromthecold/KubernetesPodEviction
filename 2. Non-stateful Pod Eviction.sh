@@ -1,0 +1,118 @@
+############################################################################
+############################################################################
+#
+# Kubernets Pod Eviction - Non-stateful pod eviction -Andrew Pruski
+# @dbafromthecold
+# dbafromthecold@gmail.com
+# https://github.com/dbafromthecold/KubernetesPodEviction
+#
+############################################################################
+############################################################################
+
+
+
+# set location
+cd /mnt/c/git/dbafromthecold/KubernetesPodEviction && pwd
+
+
+
+# log into Azure
+az login
+
+
+
+# set resource group
+RESOURCEGROUP="MC_kubernetes_kubernetes1_eastus"
+
+
+
+# list vmss
+# https://docs.microsoft.com/en-us/cli/azure/vmss?view=azure-cli-latest#az-vmss-list
+az vmss list --resource-group $RESOURCEGROUP -o table
+
+
+
+# view AKS nodes
+kubectl get nodes
+
+
+
+# deploy test application
+kubectl create deployment test --image=nginx
+
+
+
+# expose deployment
+kubectl expose deployment test --port 80 --target-port 80 --type LoadBalancer
+
+
+
+# view deployment
+kubectl get all
+
+
+
+# grab service external IP
+IpAddress=$(kubectl get service test -o custom-columns=":status.loadBalancer.ingress[*].ip") && echo $IpAddress
+
+
+
+# confirm connecting to nginx
+curl $IpAddress --connect-timeout 5
+
+
+
+# view pods
+kubectl get pods -o wide --watch
+
+
+
+# switch to new terminal
+# get node pod is running on
+NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}") && echo $NODE
+
+
+
+# get vmms name and instance id
+VMSSNAME=${NODE:0:27} && echo $VMSSNAME 
+INSTANCEID=$(echo ${NODE:27} | sed 's/0*//') && echo $INSTANCEID
+
+
+
+# shutdown node in AKS
+az vmss deallocate --name $VMSSNAME --instance-ids $INSTANCEID --resource-group $RESOURCEGROUP
+
+
+
+# view nodes
+kubectl get nodes
+
+
+
+# view pods
+kubectl get pods -o wide
+
+
+
+# try connecting to nginx
+curl $IpAddress --connect-timeout 5
+
+
+
+# restart node in AKS
+az vmss start --name $VMSSNAME --instance-ids $INSTANCEID --resource-group $RESOURCEGROUP
+
+
+
+# view nodes
+kubectl get nodes --watch
+
+
+
+# view pods
+kubectl get pods -o wide
+
+
+
+# try connecting to nginx
+curl $IpAddress --connect-timeout 5
