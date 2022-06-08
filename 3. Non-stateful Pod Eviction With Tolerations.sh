@@ -21,7 +21,6 @@ kubectl get all
 
 
 
-
 # edit deployment adding in tolerations
 kubectl edit deployment test
 
@@ -39,15 +38,14 @@ kubectl edit deployment test
 
 
 
-# switch to other terminal
+# switch to new terminal
 # get node pod is running on
-NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}") && echo $NODE
-
+NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}" | sed 's/.$/\U&/')  && echo $NODE
 
 
 # get vmms name and instance id
 VMSSNAME=${NODE:0:27} && echo $VMSSNAME 
-INSTANCEID=$(echo ${NODE:27} | sed 's/0*//') && echo $INSTANCEID
+INSTANCEID=$(az vmss list-instances --name $VMSSNAME --resource-group $RESOURCEGROUP --query "[?osProfile.computerName=='$NODE'].[instanceId]" -o tsv) && echo $INSTANCEID
 
 
 
@@ -56,8 +54,8 @@ az vmss deallocate --name $VMSSNAME --instance-ids $INSTANCEID --resource-group 
 
 
 
-# view nodes
-kubectl get nodes
+# watch nodes
+kubectl get nodes --watch
 
 
 

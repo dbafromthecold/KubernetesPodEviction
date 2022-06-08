@@ -42,15 +42,14 @@ kubectl get pods -o wide
 
 
 
-# switch to other terminal
+# switch to new terminal
 # get node pod is running on
-NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}") && echo $NODE
-
+NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}" | sed 's/.$/\U&/')  && echo $NODE
 
 
 # get vmms name and instance id
 VMSSNAME=${NODE:0:27} && echo $VMSSNAME 
-INSTANCEID=$(echo ${NODE:27} | sed 's/0*//') && echo $INSTANCEID
+INSTANCEID=$(az vmss list-instances --name $VMSSNAME --resource-group $RESOURCEGROUP --query "[?osProfile.computerName=='$NODE'].[instanceId]" -o tsv) && echo $INSTANCEID
 
 
 

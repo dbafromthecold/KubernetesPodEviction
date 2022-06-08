@@ -1,7 +1,7 @@
 ############################################################################
 ############################################################################
 #
-# Kubernets Pod Eviction - Non-stateful pod eviction -Andrew Pruski
+# Kubernets Pod Eviction - Non-stateful pod eviction - Andrew Pruski
 # @dbafromthecold
 # dbafromthecold@gmail.com
 # https://github.com/dbafromthecold/KubernetesPodEviction
@@ -13,11 +13,6 @@
 
 # set location
 cd /mnt/c/git/dbafromthecold/KubernetesPodEviction && pwd
-
-
-
-# log into Azure
-az login
 
 
 
@@ -62,20 +57,19 @@ curl $IpAddress --connect-timeout 5
 
 
 
-# view pods
-kubectl get pods -o wide --watch
+# view nodes
+kubectl get nodes --watch
 
 
 
 # switch to new terminal
 # get node pod is running on
-NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}") && echo $NODE
-
+NODE=$(kubectl get pods -o jsonpath="{.items[0].spec.nodeName}" | sed 's/.$/\U&/')  && echo $NODE
 
 
 # get vmms name and instance id
 VMSSNAME=${NODE:0:27} && echo $VMSSNAME 
-INSTANCEID=$(echo ${NODE:27} | sed 's/0*//') && echo $INSTANCEID
+INSTANCEID=$(az vmss list-instances --name $VMSSNAME --resource-group $RESOURCEGROUP --query "[?osProfile.computerName=='$NODE'].[instanceId]" -o tsv) && echo $INSTANCEID
 
 
 
@@ -96,6 +90,11 @@ kubectl get pods -o wide
 
 # try connecting to nginx
 curl $IpAddress --connect-timeout 5
+
+
+
+# watch pods
+kubectl get pods -o wide --watch
 
 
 
