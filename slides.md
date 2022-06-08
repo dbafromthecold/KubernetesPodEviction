@@ -55,6 +55,7 @@
 ---
 
 ## What about stateful applications?
+<img src="images/pv-128.png" style="float: right"/>
 <!-- .slide: style="text-align: left;"> -->
 <ul>
 <li class="fragment">Pods need to move to a new node<br></li>
