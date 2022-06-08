@@ -56,7 +56,6 @@
 <li class="fragment">Otherwise the pod will not spin up</li>
 <ul>
 
-
 ---
 
 # Demo
@@ -71,3 +70,7 @@
 <a href="https://dbafromthecold.com/2020/04/08/adjusting-pod-eviction-time-in-kubernetes/">Blog Post - Adjusting pod eviction time</a><br>
 <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/">Kubernets Documentation - taint-and-tolerations</a>
 </font>
+
+<p align="center">
+<img src="images/qr_code.png" />
+</p>
