@@ -20,7 +20,6 @@
 ---
 
 ## Background
-<img src="images/KubernetesLogo.png" style="float: right"/>
 <!-- .slide: style="text-align: left;"> -->
 <ul>
 <li class="fragment">SQL Server DBA for over 10 years<br></li>
@@ -31,7 +30,7 @@
 
 ---
 
-## Using SQL Server in Containers
+### Using SQL Server in Containers
 
 <p align="center">
 <img src="images/ding_containers.png" />
