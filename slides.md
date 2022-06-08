@@ -48,9 +48,9 @@
 
 ## What about stateful applications?
 <!-- .slide: style="text-align: left;"> -->
-- Pods need to move to a new node
-- Storage also has to move
-- Otherwise the pod will not spin up
+- Pods need to move to a new node<br>
+- Storage also has to move<br>
+- Otherwise the pod will not spin up<br>
 
 ---
 
