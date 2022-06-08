@@ -48,9 +48,6 @@ apiServer:
     default-unreachable-toleration-seconds: "10"
 </pre></code>
 
-<br>
-<!-- .slide: style="text-align: left;"> -->
-Apply to the cluster: -
 <pre><code>sudo kubeadm init phase control-plane apiserver \
 --config=kubeadm-apiserver-update.yaml
 </pre></code>
