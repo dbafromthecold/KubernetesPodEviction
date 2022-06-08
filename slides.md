@@ -24,7 +24,8 @@
 <!-- .slide: style="text-align: left;"> -->
 <ul>
 <li class="fragment">What happens when a node fails?<br></li>
-<li class="fragment">Pods are moved to node in the Ready state</li>
+<li class="fragment">Aka a node becomes "NotReady"<br></li>
+<li class="fragment">Pods are moved to node in the "Ready" state</li>
 <li class="fragment">However, by default this takes 5 minutes</li>
 <ul>
 
@@ -32,6 +33,26 @@
 ---
 
 # Demo
+
+---
+
+# Setting eviction timeout on the api-server
+
+<pre><code data-line-numbers="7-8">apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: v1.18.0
+apiServer:
+  extraArgs:
+    enable-admission-plugins: DefaultTolerationSeconds
+    default-not-ready-toleration-seconds: "10"
+    default-unreachable-toleration-seconds: "10"
+</pre></code>
+
+<br>
+
+<pre><code>sudo kubeadm init phase control-plane \
+apiserver --config=kubeadm-apiserver-update.yaml
+</pre></code>
 
 ---
 
