@@ -37,7 +37,7 @@
 ---
 
 ### Setting eviction timeout on the api-server
-
+<!-- .slide: style="text-align: left;"> -->
 <pre><code data-line-numbers="1-8|7-8">apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: v1.18.0
