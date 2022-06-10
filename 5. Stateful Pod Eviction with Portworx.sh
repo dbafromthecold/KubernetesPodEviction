@@ -110,7 +110,7 @@ kubectl get pods -o wide
 
 
 # get new pod
-PODNAME=$(kubectl get pods -o jsonpath='{.items[0].metadata.name}') && echo $PODNAME
+PODNAME=$(kubectl get pods -o jsonpath='{.items[1].metadata.name}') && echo $PODNAME
 
 
 
