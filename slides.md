@@ -60,7 +60,7 @@
 
 ---
 
-## Adjusting pod eviction timings
+# Adjusting pod eviction timings
 
 ---
 
@@ -118,11 +118,11 @@ apiServer:
 
 ---
 
-## An Option for storage
+# An Option for storage
 
 ---
 
-## Portworx
+### Portworx
 
 <p align="center">
 <img src="images/portworx.png" />
