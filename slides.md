@@ -114,7 +114,11 @@ apiServer:
 
 ---
 
-## Option for storage
+# Demo
+
+---
+
+## An Option for storage
 
 ---
 
@@ -124,7 +128,9 @@ apiServer:
 <img src="images/portworx.png" />
 </p>
 <!-- .slide: style="text-align: left;"> -->
-https://www.purestorage.com/products/cloud-native-applications/portworx.html
+<font size="6">
+<a href="https://www.purestorage.com/products/cloud-native-applications/portworx.html">purestorage.com/products/cloud-native-applications/portworx.html</a>
+
 ---
 
 # Demo
