@@ -60,6 +60,10 @@
 
 ---
 
+## Adjusting pod eviction timings
+
+---
+
 ### Setting eviction timeout on the api-server
 <!-- .slide: style="text-align: left;"> -->
 <pre><code data-line-numbers="1-8|7-8">apiVersion: kubeadm.k8s.io/v1beta2
@@ -108,6 +112,19 @@ apiServer:
 <li class="fragment">Otherwise the pod will not spin up</li>
 <ul>
 
+---
+
+## Option for storage
+
+---
+
+## Portworx
+
+<p align="center">
+<img src="images/portworx.png" />
+</p>
+<!-- .slide: style="text-align: left;"> -->
+https://www.purestorage.com/products/cloud-native-applications/portworx.html
 ---
 
 # Demo
